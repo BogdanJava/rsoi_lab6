@@ -24,7 +24,7 @@ class EventService {
   }
 
   publishEvent(eventType, eventData) {
-    console.log(`publishing: ${eventType}, ${eventData}`);
+    console.log(`publishing: ${eventType}, ${JSON.stringify(eventData)}`);
     let event = new CustomEvent(eventType, eventData);
     document.dispatchEvent(event);
   }

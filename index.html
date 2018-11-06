@@ -9,6 +9,7 @@
     <link href="assets/font-awesome/css/all.css" type="text/css" rel="stylesheet">
     <link href="style/main.css" type="text/css" rel="stylesheet">
     <link href="style/fonts.css" type="text/css" rel="stylesheet">
+    <link href="style/modal.css" type="text/css" rel="stylesheet">
     <title>RSOI lab6</title>
 </head>
 
@@ -19,29 +20,50 @@
             <span class="logo__text">Phone Service</span>
         </div>
         <div class="buttons">
-            <button class="buttons__add">
+            <button class="buttons__add" id="addButton">
                 <i class="fas fa-plus-circle"></i>
                 Add
             </button>
-            <button class="buttons_delete">
+            <button class="buttons_delete" id="deleteButton">
                 <i class="fas fa-trash"></i>
                 Delete
             </button>
-            <button class="buttons__edit">
+            <button class="buttons__edit" id="editButton">
                 <i class="far fa-edit"></i>
                 Edit
             </button>
         </div>
     </header>
-    <main>
-
+    <main class="main" id="main">
+        <div class="customers_table">
+            <table class="customers_table__table">
+                <thead>
+                    <th>
+                        <i class="far fa-check-square"></i>
+                    </th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Is debt presents</th>
+                </thead>
+                <tbody id="customers_table__table__body">
+                </tbody>
+            </table>
+        </div>
     </main>
     <footer>
 
     </footer>
+
+    <dialog id="addCustomerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    </dialog>
 </body>
 <script src="script/eventService.js"></script>
 <script src="script/customer.js"></script>
+<script src="script/customersTable.js"></script>
 <script src="script/main.js"></script>
 
 </html>
