@@ -195,6 +195,7 @@ function updateTable() {
       fillDetailedInfo(customers[0].id);
     }
     setCheckboxListeners();
+    updateButtons();
   });
 }
 
