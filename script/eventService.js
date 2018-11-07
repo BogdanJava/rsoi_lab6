@@ -23,6 +23,11 @@ class EventService {
     });
   }
 
+  /**
+   * Publishes event into EventService
+   * @param {string} eventType type of a publishing event
+   * @param {object} eventData a companion object
+   */
   publishEvent(eventType, eventData) {
     console.log(`publishing: ${eventType}, ${JSON.stringify(eventData)}`);
     let event = new CustomEvent(eventType, eventData);

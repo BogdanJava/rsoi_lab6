@@ -1,25 +1,53 @@
-let handler = event => {
+function createCustomerEventHandler(event) {
   let eventDetails = event.detail;
-  console.log("success: ", eventDetails.success);
-  console.log("data: ", eventDetails.data);
-};
+  if (eventDetails.success) {
+    console.log("customer has been created");
+    updateTable();
+    closeAddModal();
+    pushNotification(
+      "SUCCESS",
+      "User created successfully!",
+      NotificationType.SUCCESS
+    );
+  } else {
+    console.log("error creating customer");
+  }
+}
 
-let eventService = new EventService(handler, handler, handler);
+function deleteCustomerEventHandler(event) {
+  let eventDetails = event.detail;
+  if (eventDetails.success) {
+    console.log("customer has been deleted");
+    updateTable();
+    pushNotification(
+      "SUCCESS",
+      "User deleted successfully!",
+      NotificationType.DANGER
+    );
+  } else {
+    console.log("error deleting customer");
+  }
+}
+
+function updateCustomerEventHandler(event) {
+  let eventDetails = event.detail;
+  if (eventDetails.success) {
+    console.log("customer has been updated");
+    updateTable();
+    closeEditModal();
+    pushNotification(
+      "SUCCESS",
+      "User updated successfully!",
+      NotificationType.INFO
+    );
+  } else {
+    console.log("error updating customer");
+  }
+}
+
+let eventService = new EventService(
+  createCustomerEventHandler,
+  deleteCustomerEventHandler,
+  updateCustomerEventHandler
+);
 let customerRepository = new CustomerRepository(eventService);
-
-customerRepository.getAll(
-  customerArray => {
-    customerArray.forEach(customer => {
-      console.log(customer.toString());
-    });
-  },
-  errors => {}
-);
-
-customerRepository.getById(
-  "790f40b2-1729-cbf0-0256-d4de84bed6ed",
-  results => {
-    console.log(results[0].toString());
-  },
-  errors => {}
-);

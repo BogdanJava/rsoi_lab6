@@ -1,0 +1,63 @@
+.notification {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  padding: 10px;
+  background: #388bd4;
+  color: #fff;
+  animation: animate-notification 0.7s;
+  -webkit-animation: animate-notification 0.7s;
+  display: none;
+  overflow: auto;
+}
+
+@keyframes animate-notification {
+  0% {
+    right: -300px;
+    bottom: 20px;
+    opacity: 0;
+  }
+  80% {
+    right: 200px;
+    bottom: 20px;
+    opacity: 0.8;
+  }
+  100% {
+    right: 20px;
+    bottom: 20px;
+    opacity: 1;
+  }
+}
+
+.success {
+  background: #359839;
+}
+
+.danger {
+  background: #e22d2d;
+}
+
+.info {
+  background: #2196f3;
+}
+
+.notification__body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.notification__body_icon {
+  font-size: 30px;
+}
+
+.notification__body_text {
+  height: fit-content;
+  padding: 8px 0;
+  font-size: 15px;
+}
+
+.notification__footer {
+  font-size: 12px;
+  padding: 3px 10px 0;
+}

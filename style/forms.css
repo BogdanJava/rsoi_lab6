@@ -1,0 +1,72 @@
+.form-label {
+  font-size: 26px;
+}
+
+.form-control > label {
+  font-size: 15px;
+}
+
+.container {
+  width: 100%;
+}
+
+.focusable:focus {
+  background: #03a9f4;
+  border: 1px solid #000;
+  box-shadow: 0px 0 1px 1px #03a9f4;
+}
+
+.hint {
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.form {
+  width: fit-content;
+  margin: 0 auto;
+  height: 400px;
+  margin-top: 100px;
+}
+
+.form-control {
+  width: 100%;
+  margin-top: 15px;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control > input,
+textarea {
+}
+
+.form-control > textarea {
+  height: 60px;
+}
+
+.form-button-group {
+  margin-top: 10px;
+}
+
+.form-button {
+  background: #fff;
+  border: 1px solid rgb(94, 167, 116);
+  padding: 4px;
+  cursor: pointer;
+  color: rgb(94, 167, 116);
+  transition: all ease-in-out 0.5s;
+}
+
+.form-button:hover {
+  border: 1px solid #fff;
+  background: rgb(94, 167, 116);
+  color: #fff;
+}
+
+.textarea {
+  resize: none;
+}
+
+.padding-bottom-50px {
+  padding-bottom: 50px;
+}

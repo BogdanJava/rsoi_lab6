@@ -13,8 +13,8 @@ class Customer {
     return JSON.stringify(this);
   }
 
-  isDebtPresent() {
-    return this.balance < 0;
+  isDebtPresents() {
+    return Number.parseInt(this.balance) < 0;
   }
 }
 
@@ -54,9 +54,9 @@ class CustomerRepository {
           result => {
             console.log("Database has been created successfully");
           },
-          (tx, errors) => {
+          (tx, error) => {
             console.error(
-              `There were errors while creating the database: ${errors}`
+              `There was an error while creating the database: ${error}`
             );
           }
         );
@@ -118,7 +118,7 @@ class CustomerRepository {
   update(id, customer) {
     let query =
       "UPDATE customers SET name=?, phone=?, address=?, balance=?" +
-      " WHERE rowid = ?";
+      " WHERE id = ?";
     let args = [
       customer.name,
       customer.phone,
@@ -135,7 +135,7 @@ class CustomerRepository {
    * pattern: (resultArray) => {...}
    */
   getAll(resultCallback, errorCallback) {
-    let query = "SELECT * FROM customers";
+    let query = "SELECT * FROM customers WHERE deleted != 1";
     let args = [];
     this.getQuery(query, args, resultCallback, errorCallback);
   }
@@ -144,23 +144,29 @@ class CustomerRepository {
    * Retrives a customer by the given id
    * @param {number} id id of the customer to find
    * @param resultCallback callback on result data;
-   * pattern: (resultArray) => {...}
+   * pattern: (customer) => {...}
    */
   getById(id, resultCallback, errorCallack) {
     let query = "SELECT * FROM customers WHERE id = ?";
     let args = [id];
-    this.getQuery(query, args, resultCallback, errorCallack);
+    let resultCallbackWrapper = customers => {
+      return resultCallback(customers[0]);
+    };
+    this.getQuery(query, args, resultCallbackWrapper, errorCallack);
   }
 
   getQuery(query, args, resultCallback, errorCallack) {
+    if (!errorCallack) {
+      errorCallack = () => {};
+    }
     this.executeQuery(
       query,
       args,
       (transaction, results) => {
         resultCallback(this.getJsonFromResultSet(results));
       },
-      (transaction, errors) => {
-        errorCallack(errors);
+      (transaction, error) => {
+        errorCallack(error.message);
       }
     );
   }
@@ -170,9 +176,30 @@ class CustomerRepository {
    * @param {number} id id of the customer to be deleted
    */
   delete(id) {
-    throw new Error("Method is not implemented");
+    let query = "UPDATE customers SET deleted = 1 WHERE id = ?";
+    let args = [id];
+    this.executeQueryDefault(query, args, EventType.DELETED);
   }
 
+  deleteMany(ids) {
+    let query = "UPDATE customers SET deleted = 1 WHERE id in (REPLACE_ME)";
+    query = this.processDeleteManyQuery(query, ids);
+    let args = ids;
+    this.executeQueryDefault(query, args, EventType.DELETED);
+  }
+
+  processDeleteManyQuery(query, ids) {
+    let replaceString = "";
+    for (let id of ids) {
+      replaceString += "?,";
+    }
+    replaceString = replaceString.substring(0, replaceString.length - 1);
+    return query.replace("REPLACE_ME", replaceString);
+  }
+
+  /**
+   * Drops customers table
+   */
   dropAll() {
     let query = "DROP TABLE customers";
     let args = [];
@@ -191,11 +218,11 @@ class CustomerRepository {
           }
         });
       },
-      (tx, errors) => {
+      (tx, error) => {
         this.eventService.publishEvent(eventType, {
           detail: {
             success: false,
-            errors: errors
+            error: error.message
           }
         });
       }
@@ -231,7 +258,7 @@ class CustomerRepository {
    * @param successCallback called after successfull execution of query;
    * pattern: (transaction, results) => {...}
    * @param errorCallack called in case of an error;
-   * pattern: (transaction, errors) => {...}
+   * pattern: (transaction, error) => {...}
    */
   executeQuery(query, args, successCallback, errorCallack) {
     this.checkConnection();
@@ -240,13 +267,17 @@ class CustomerRepository {
       console.log(`result: ${this.getJsonFromResultSet(result)}`);
       return successCallback(transaction, result);
     };
-    let errorCallbackWrapper = (transaction, errors) => {
-      console.log(`errors: ${errors.message}`);
-      return errorCallack(transaction, errors);
+    let errorCallbackWrapper = (transaction, error) => {
+      console.log(`error: ${error.message}`);
+      return errorCallack(transaction, error);
     };
     console.log(`executing query: ${query}; args: ${args}`);
     this.databaseObject.transaction(tx => {
       tx.executeSql(query, args, successCallbackWrapper, errorCallbackWrapper);
     });
   }
+}
+
+function stringifyArray(array) {
+  return array.map(el => `'${el}'`).reduce((a, b) => `${a}, ${b}`);
 }

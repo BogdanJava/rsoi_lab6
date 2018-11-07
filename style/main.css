@@ -1,16 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .header {
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 999;
-  background: #8c8d94;
+  background: #4a799e;
 }
 
 .logo {
   width: fit-content;
   display: inline-block;
-  margin: 20px 0 20px 30px;
+  margin: 10px 0 20px 30px;
   border: 2px solid #000;
   border-radius: 6px;
   padding: 5px;
@@ -26,10 +35,10 @@
   font-size: 24px;
 }
 
-.buttons {
+#buttons {
   width: fit-content;
   float: right;
-  margin: 20px 40px 20px 0;
+  margin: 15px 40px 20px 0;
 }
 
 .buttons button {
@@ -43,7 +52,7 @@
 }
 
 .buttons button:hover {
-  background: #fff;    
+  background: #fff;
 }
 
 .buttons__add {
@@ -56,12 +65,36 @@
   color: rgb(36, 175, 106);
 }
 
-.buttons_delete {
+.buttons__edit:disabled {
+  background: rgb(170, 170, 170);
+  color: #fff;
+  border: 1px solid #fff0 !important;
+}
+
+.buttons__delete:disabled {
+  background: rgb(170, 170, 170);
+  color: #fff;
+  border: 1px solid #fff0 !important;
+}
+
+.buttons__edit:disabled:hover {
+  background: rgb(170, 170, 170);
+  color: #fff;
+  border: 1px solid #fff0 !important;
+}
+
+.buttons__delete:disabled:hover {
+  background: rgb(170, 170, 170);
+  color: #fff;
+  border: 1px solid #fff0 !important;
+}
+
+.buttons__delete {
   border-color: rgb(219, 62, 96) !important;
   background: rgb(219, 62, 96);
 }
 
-.buttons_delete:hover {
+.buttons__delete:hover {
   border: 1px solid rgb(219, 62, 96);
   color: rgb(219, 62, 96);
 }
@@ -74,4 +107,79 @@
 .buttons__edit:hover {
   border: 1px solid rgb(222, 235, 48);
   color: rgb(222, 235, 48);
+}
+
+.main {
+  padding-top: 70px;
+  background: #b8cad829;
+  display: flex;
+  justify-content: space-between;
+}
+
+.customers-table {
+  width: 100%;
+  margin: 20px;
+  text-align: center;
+}
+
+.customers-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customers-table__table th,
+td {
+  height: 30px;
+  border-bottom: 1px solid rgb(200, 197, 197);
+  padding: 5px;
+}
+
+.customers-table__table tbody > tr {
+  cursor: pointer;
+}
+
+.customers-table__table tbody > tr:hover {
+  background: #4a799e26;
+}
+
+.customers-table__table_checkbox {
+}
+
+.customers-detailed {
+  width: 660px;
+  height: fit-content;
+  font-size: 14px;
+  padding: 15px;
+}
+
+.customers-detailed h3 {
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.customers-detailed__info {
+  margin-top: 10px;
+}
+
+.info__attribute {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info__attribute_key {
+  width: 60%;
+  color: #9a9a9a;
+}
+
+.info__attribute_value {
+  width: 100%;
+}
+
+.has-debt {
+  background: #f96e6e;
+}
+
+.has-debt:hover {
+  background: #f8b3b3 !important;
 }
