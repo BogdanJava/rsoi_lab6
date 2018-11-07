@@ -4,6 +4,7 @@ function createCustomerEventHandler(event) {
     console.log("customer has been created");
     updateTable();
     closeAddModal();
+    updateButtons();
     pushNotification(
       "SUCCESS",
       "User created successfully!",
@@ -19,6 +20,7 @@ function deleteCustomerEventHandler(event) {
   if (eventDetails.success) {
     console.log("customer has been deleted");
     updateTable();
+    updateButtons();
     pushNotification(
       "SUCCESS",
       "User deleted successfully!",
@@ -35,6 +37,7 @@ function updateCustomerEventHandler(event) {
     console.log("customer has been updated");
     updateTable();
     closeEditModal();
+    updateButtons();
     pushNotification(
       "SUCCESS",
       "User updated successfully!",
