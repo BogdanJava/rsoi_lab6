@@ -183,3 +183,64 @@ td {
 .has-debt:hover {
   background: #f8b3b3 !important;
 }
+
+.footer {
+  width: 100%;
+  background: #212529;
+  color: #495057;
+}
+
+.about {
+  padding: 20px;
+  width: 40%;
+}
+
+.contacts {
+  padding: 20px 20px 40px;
+}
+
+.section-header {
+  text-align: center;
+  color: #ced4da;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.contacts__contact {
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+}
+
+.contacts__contact_name {
+  color: #999fa5;
+}
+
+.contacts__contact_position {
+}
+
+.logos {
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.section-content {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+.logos__logo {
+  padding: 20px;
+}
+
+.logos__logo_img {
+  width: 100px;
+  height: 35px;
+}
+
+.row {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
