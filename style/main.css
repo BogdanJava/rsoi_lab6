@@ -41,7 +41,7 @@ body {
   margin: 15px 40px 20px 0;
 }
 
-.buttons button {
+.buttons button, .customers-detailed__add-field {
   border: 1px solid;
   cursor: pointer;
   font-size: 16px;
@@ -51,8 +51,19 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-.buttons button:hover {
+.buttons button:hover, .customers-detailed__add-field:hover {
   background: #fff;
+}
+
+.customers-detailed__add-field {
+  border-color: rgb(36, 147, 175) !important;
+  background: rgb(36, 147, 175);
+  margin-top: 15px;
+}
+
+.customers-detailed__add-field:hover {
+  border: 1px solid rgb(36, 147, 175);
+  color: rgb(36, 147, 175);
 }
 
 .buttons__add {

@@ -45,7 +45,8 @@
                     </th>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>Is debt presents</th>
+                    <th>Is debt presents
+                        <input type="checkbox" id="showDebtOnly"> </th>
                 </thead>
                 <tbody id="customersTableBody">
                 </tbody>
@@ -95,6 +96,10 @@
                     </div>
                 </div>
             </div>
+            <button class="customers-detailed__add-field" id="addFieldButton">
+                <i class="fas fa-plus-circle"></i>
+                Add field
+            </button>
         </div>
     </main>
     <footer class="footer" id="footer">
@@ -151,6 +156,31 @@
         </div>
     </footer>
 
+    <dialog class="modal" id="addFieldModel">
+        <div class="modal__content">
+            <div class="modal__content_header info_theme">
+                <span class="close">&times;</span>
+                <h2>Add a new field</h2>
+            </div>
+            <div class="modal__content_body">
+                <form>
+                    <div class="form-control">
+                        <label for="fieldNameInput">Field name</label>
+                        <input type="text" maxlength="10" id="fieldNameInput" class="form-input focusable">
+                    </div>
+                </form>
+            </div>
+            <div class="modal__content_footer">
+                <div class="modal__content_footer_buttons buttons">
+                    <button class="buttons__add " id="saveFieldButton">
+                        <i class="far fa-save"></i>
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <dialog id="addCustomerModal" class="modal">
         <div class="modal__content">
             <div class="modal__content_header add_theme">
@@ -158,22 +188,22 @@
                 <h2>Add a new customer</h2>
             </div>
             <div class="modal__content_body">
-                <form class="add_customer_form">
+                <form class="add_customer_form" id="addCustomerForm">
                     <div class="form-control">
                         <label for="nameInputAdd">Name</label>
-                        <input type="text" name="name" id="nameInputAdd" class="form-input focusable">
+                        <input type="text" maxlength="20" name="name" id="nameInputAdd" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="phoneInputAdd">Phone</label>
-                        <input type="text" name="phone" id="phoneInputAdd" class="form-input focusable">
+                        <input type="text" name="phone" maxlength="20" id="phoneInputAdd" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="addressInputAdd">Address</label>
-                        <input type="text" name="address" id="addressInputAdd" class="form-input focusable">
+                        <input type="text" maxlength="30" name="address" id="addressInputAdd" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="balanceInputAdd">Balance</label>
-                        <input type="text" name="balance" id="balanceInputAdd" class="form-input focusable">
+                        <input type="number" name="balance" id="balanceInputAdd" class="form-input focusable">
                     </div>
                 </form>
             </div>
@@ -195,26 +225,26 @@
                 <h2>Edit customer</h2>
             </div>
             <div class="modal__content_body">
-                <form class="add_customer_form">
+                <form class="add_customer_form" id="editCustomerForm">
                     <div class="form-control">
                         <label for="idSpan">Id</label>
                         <span class="form-input" id="idSpan"></span>
                     </div>
                     <div class="form-control">
                         <label for="nameInputEdit">Name</label>
-                        <input type="text" name="name" id="nameInputEdit" class="form-input focusable">
+                        <input type="text" maxlength="20" name="name" id="nameInputEdit" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="phoneInputEdit">Phone</label>
-                        <input type="text" name="phone" id="phoneInputEdit" class="form-input focusable">
+                        <input type="text" maxlength="20" name="phone" id="phoneInputEdit" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="addressInputEdit">Address</label>
-                        <input type="text" name="address" id="addressInputEdit" class="form-input focusable">
+                        <input type="text" maxlength="30" name="address" id="addressInputEdit" class="form-input focusable">
                     </div>
                     <div class="form-control">
                         <label for="balanceInputEdit">Balance</label>
-                        <input type="text" name="balance" id="balanceInputEdit" class="form-input focusable">
+                        <input type="number" name="balance" id="balanceInputEdit" class="form-input focusable">
                     </div>
                 </form>
             </div>

@@ -7,6 +7,7 @@ class Customer {
     this.created = null;
     this.deleted = 0;
     this.id = 0;
+    this.customAttributes = {};
   }
 
   toString() {
@@ -75,17 +76,40 @@ class CustomerRepository {
    * @param {Customer} customer a customer to be saved
    */
   create(customer) {
-    let query = "INSERT INTO customers VALUES(?,?,?,?,?,?,0);";
+    debugger;
+    let query = this.withCustomAttributes(
+      "INSERT INTO customers VALUES(?,?,?,?,?,?,0",
+      customer.customAttributes
+    );
     let date = new Date();
-    let args = [
-      this.guid(),
-      customer.name,
-      customer.phone,
-      customer.address,
-      customer.balance,
-      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-    ];
+    let args = this.argsWithCustomAttributes(
+      [
+        this.guid(),
+        customer.name,
+        customer.phone,
+        customer.address,
+        customer.balance,
+        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      ],
+      customer.customAttributes
+    );
     this.executeQueryDefault(query, args, EventType.CREATED);
+  }
+
+  argsWithCustomAttributes(args, customAttributes) {
+    Object.keys(customAttributes).forEach(key => {
+      args.push(customAttributes[key]);
+    });
+    return args;
+  }
+
+  withCustomAttributes(query, customAttributes) {
+    let length = Object.keys(customAttributes).length;
+    for (let i = 0; i < length; i++) {
+      query += ",?";
+    }
+    query = query.substring(0, query.length) + ");";
+    return query;
   }
 
   guid() {
@@ -171,6 +195,24 @@ class CustomerRepository {
     );
   }
 
+  addColumn(fieldName, callback) {
+    let query = `ALTER TABLE customers ADD COLUMN custom_${fieldName} TEXT(30)`;
+    let args = [];
+    this.executeQuery(
+      query,
+      args,
+      (transaction, results) => {
+        this.eventService.publishEvent(EventType.FIELD_CREATED, {
+          detail: {
+            success: true
+          }
+        });
+        callback();
+      },
+      () => {}
+    );
+  }
+
   /**
    * Marks a customer as deleted
    * @param {number} id id of the customer to be deleted
@@ -179,6 +221,26 @@ class CustomerRepository {
     let query = "UPDATE customers SET deleted = 1 WHERE id = ?";
     let args = [id];
     this.executeQueryDefault(query, args, EventType.DELETED);
+  }
+
+  getColumnsList(callback) {
+    let query = "SELECT * FROM customers";
+    let args = [];
+    this.executeQuery(
+      query,
+      args,
+      (transaction, resultSet) => {
+        let keys = [];
+        for (let i = 0; i < resultSet.rows.length; i++) {
+          keys = Object.keys(resultSet.rows[i]);
+          break;
+        }
+        callback(keys);
+      },
+      (transaction, error) => {
+        console.log("error: ", error.message);
+      }
+    );
   }
 
   deleteMany(ids) {
@@ -238,14 +300,13 @@ class CustomerRepository {
     for (let i = 0; i < resultSet.rows.length; i++) {
       let customer = new Customer();
       let row = resultSet.rows.item(i);
-      customer.id = row["id"];
-      customer.name = row["name"];
-      customer.phone = row["phone"];
-      customer.address = row["address"];
-      customer.created = row["created"];
-      customer.deleted = row["deleted"];
-      customer.balance = row["balance"];
-      customers.push(customer);
+      let keys = Object.keys(row);
+      keys.filter(key => key.startsWith("custom")).forEach(key => {
+        customer.customAttributes[key] = row[key];
+      });
+      debugger;
+      row.__proto__ = customer.__proto__;
+      customers.push(row);
     }
     return customers;
   }

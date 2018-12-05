@@ -62,6 +62,10 @@
   background-color: #24af6a;
 }
 
+.info_theme {
+  background-color: rgb(77, 139, 197);
+}
+
 .edit_theme {
   background-color: #b7d85c;
 }

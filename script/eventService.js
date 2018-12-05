@@ -2,10 +2,16 @@
  * Publishes events that control the customers table state
  */
 class EventService {
-  constructor(createdCallback, deletedCallback, updatedCallback) {
+  constructor(
+    createdCallback,
+    deletedCallback,
+    updatedCallback,
+    fieldAddedCallback
+  ) {
     this.createdCallback = createdCallback;
     this.deletedCallback = deletedCallback;
     this.updatedCallback = updatedCallback;
+    this.fieldAddedCallback = fieldAddedCallback;
     this.registerDefaultEvents();
   }
   registerDefaultEvents() {
@@ -20,6 +26,9 @@ class EventService {
     document.addEventListener(EventType.UPDATED, event => {
       console.log(`received event: ${event}`);
       this.updatedCallback(event);
+    });
+    document.addEventListener(EventType.FIELD_CREATED, event => {
+      this.fieldAddedCallback(event);
     });
   }
 
@@ -43,3 +52,4 @@ class EventType {}
 EventType.CREATED = "created";
 EventType.DELETED = "deleted";
 EventType.UPDATED = "updated";
+EventType.FIELD_CREATED = "field_created";

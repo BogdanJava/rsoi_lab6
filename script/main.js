@@ -15,6 +15,18 @@ function createCustomerEventHandler(event) {
   }
 }
 
+function fieldAddedEventHandler(event) {
+  let eventSuccess = event.success;
+  if (eventSuccess) {
+    console.log("field has been created");
+    pushNotification(
+      "SUCCESS",
+      "New field has been added",
+      NotificationType.INFO
+    );
+  }
+}
+
 function deleteCustomerEventHandler(event) {
   let eventDetails = event.detail;
   if (eventDetails.success) {
@@ -51,6 +63,7 @@ function updateCustomerEventHandler(event) {
 let eventService = new EventService(
   createCustomerEventHandler,
   deleteCustomerEventHandler,
-  updateCustomerEventHandler
+  updateCustomerEventHandler,
+  fieldAddedEventHandler
 );
 let customerRepository = new CustomerRepository(eventService);
